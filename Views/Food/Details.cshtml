@@ -1,0 +1,62 @@
+﻿@model zero_hunger.Models.DB.food
+@{
+    ViewBag.Title = Model.food_name;
+}
+<div>
+    <h4>food</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.resturent_user_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.resturent_user_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.food_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.food_name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.image_link)
+        </dt>
+
+        <dd>
+            <img src="@(Model.image_link)" height="100px" />
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.qty)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.qty)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.created_at)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.created_at)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.updated_at)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.updated_at)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

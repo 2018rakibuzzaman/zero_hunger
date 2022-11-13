@@ -1,0 +1,83 @@
+﻿@model IEnumerable<zero_hunger.Models.DB.food>
+@{ 
+    ViewBag.Title = "All Foods";
+}
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.food_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.image_link)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.qty)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.created_at)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.updated_at)
+        </th>
+        <th>
+            Action
+        </th>
+        <th>
+            Cart
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.food_name)
+        </td>
+        <td>
+            <img src="@(item.image_link)" height="50px" />
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.qty)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.created_at)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.updated_at)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id })
+        </td>
+        <td>
+            <input type="button" class="btn btn-info" onclick="add_to_cart(@item.id)" value="Add to cart" />
+        </td>
+    </tr>
+}
+
+</table>
+
+<script>
+    function add_to_cart(f_id)
+    {
+        
+
+        $.ajax({
+            url: "/Cart/Create",
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            data: { food_id: f_id },
+            dataType: "json",
+            success: function (response) {
+                alert(response);
+            },
+            error: function (response) {
+                alert(response);
+            }
+        });
+    }
+</script>

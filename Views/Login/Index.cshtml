@@ -1,0 +1,43 @@
+﻿@model zero_hunger.Models.Login
+@{
+    ViewData["Title"] = "Login";
+}
+
+<center>
+    <h1>Login</h1>
+</center>
+
+<section>
+    <div class="container">
+        <form action="" method="post" enctype="multipart/form-data">
+
+            <div class="form-group">
+                <label for="Email">Email</label>
+                <input type="email" id="Email" class="form-control" name="Email" value="rakib@mail.com" />
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                <span class = "text-danger">@TempData["Email"]</span>
+            </div>
+
+            <div class="form-group">
+                <label for="Password">Password</label>
+                <input type="password" id="Password" class="form-control" name="Password" value="12345678" />
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                <span class="text-danger">@TempData["Password"]</span>
+            </div>
+
+            @*<div class="form-group">
+                <input type="checkbox" id="Remberme" class="form-check-input" name="Remberme" />
+                <label class="form-check-label" for="Rememberme">Remember the browser.</label>
+            </div>*@
+
+            <div class="form-group">
+                <br />
+                <input type="submit" class="btn btn-success" value="Login" />
+            </div>
+
+        </form>
+        <center>
+            <a href="/Signup">Don't have any account?</a>
+        </center>
+    </div>
+</section>

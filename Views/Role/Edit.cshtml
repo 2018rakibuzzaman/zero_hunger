@@ -1,0 +1,79 @@
+﻿@model zero_hunger.Models.DB.role
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>role</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.role_name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.role_name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.role_name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.permission, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="checkbox" onclick="check(this)" value="1" @( Array.Exists(Model.permission.Split(','),e=>e == "1" ) ? "checked" : "" )/> All Admin<br />
+                <input type="checkbox" onclick="check(this)" value="2" @( Array.Exists(Model.permission.Split(','),e=>e == "2" ) ? "checked" : "" )/> Add Admin<br />
+                <input type="checkbox" onclick="check(this)" value="3" @( Array.Exists(Model.permission.Split(','),e=>e == "3" ) ? "checked" : "" )/> All Role<br />
+                <input type="checkbox" onclick="check(this)" value="4" @( Array.Exists(Model.permission.Split(','),e=>e == "4" ) ? "checked" : "" )/> Add Role<br />
+                <input type="checkbox" onclick="check(this)" value="5" @( Array.Exists(Model.permission.Split(','),e=>e == "5" ) ? "checked" : "" )/> All Food<br />
+                <input type="checkbox" onclick="check(this)" value="6" @( Array.Exists(Model.permission.Split(','),e=>e == "6" ) ? "checked" : "" )/> Add Food<br />
+                <input type="checkbox" onclick="check(this)" value="7" @( Array.Exists(Model.permission.Split(','),e=>e == "7" ) ? "checked" : "" )/> All Request<br />
+                <input type="checkbox" onclick="check(this)" value="8" @( Array.Exists(Model.permission.Split(','),e=>e == "8" ) ? "checked" : "" )/> Add Request<br />
+                @Html.ValidationMessageFor(model => model.permission, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group" hidden>
+            @Html.LabelFor(model => model.permission, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.permission, new { htmlAttributes = new { @class = "form-control",@id= "permission" } })
+                @Html.ValidationMessageFor(model => model.permission, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <script>
+            function check(e) {
+                var inputper = document.getElementById('permission');
+                if (e.checked == true) {
+                    if (inputper.value == "") {
+                        inputper.value = e.value;
+                    }
+                    else {
+                        inputper.value = inputper.value + "," + e.value;
+                    }
+
+                } else {
+
+                    const myArray = inputper.value.split(",");
+                    const ary = myArray.filter(a => a !== e.value);
+                    inputper.value = ary.toString();
+                }
+            }
+        </script>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

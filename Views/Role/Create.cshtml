@@ -1,0 +1,83 @@
+﻿@model zero_hunger.Models.DB.role
+
+@{
+    ViewBag.Title = "Add Role";
+}
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4>role</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.role_name, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.role_name, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.role_name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.permission, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <input type="checkbox" onclick="check(this)" value="1" /> All Admin<br />
+            <input type="checkbox" onclick="check(this)" value="2" /> Add Admin<br />
+            <input type="checkbox" onclick="check(this)" value="3" /> All Role<br />
+            <input type="checkbox" onclick="check(this)" value="4" /> Add Role<br />
+            <input type="checkbox" onclick="check(this)" value="5" /> All Food<br />
+            <input type="checkbox" onclick="check(this)" value="6" /> Add Food<br />
+            <input type="checkbox" onclick="check(this)" value="7" /> All Request<br />
+            <input type="checkbox" onclick="check(this)" value="8" /> Add Request<br />
+            @Html.ValidationMessageFor(model => model.permission, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form-group" hidden>
+        @Html.LabelFor(model => model.permission, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.permission, new { htmlAttributes = new { @class = "form-control", @id = "permission" } })
+            @Html.ValidationMessageFor(model => model.permission, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <script>
+        function check(e) {
+            var inputper = document.getElementById('permission');
+            if (e.checked == true) {
+                if (inputper.value == "") {
+                    inputper.value = e.value;
+                }
+                else {
+                    inputper.value = inputper.value + "," + e.value;
+                }
+                 
+            } else {
+
+                const myArray = inputper.value.split(",");
+                const ary = myArray.filter(a => a !== e.value);
+                inputper.value = ary.toString();
+             }
+        }
+    </script>
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}   
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
