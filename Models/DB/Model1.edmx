@@ -15,6 +15,8 @@
           <Property Name="status" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="created_at" Type="datetime" />
           <Property Name="updated_at" Type="datetime" />
+          <Property Name="qty" Type="int" />
+          <Property Name="preserve_date" Type="datetime" />
         </EntityType>
         <EntityType Name="food">
           <Key>
@@ -24,7 +26,6 @@
           <Property Name="resturent_user_id" Type="int" Nullable="false" />
           <Property Name="food_name" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="image_link" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="qty" Type="int" Nullable="false" />
           <Property Name="created_at" Type="datetime" />
           <Property Name="updated_at" Type="datetime" />
         </EntityType>
@@ -76,6 +77,8 @@
           <Property Name="status" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="created_at" Type="DateTime" Precision="3" />
           <Property Name="updated_at" Type="DateTime" Precision="3" />
+          <Property Name="qty" Type="Int32" />
+          <Property Name="preserve_date" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="food">
           <Key>
@@ -85,7 +88,6 @@
           <Property Name="resturent_user_id" Type="Int32" Nullable="false" />
           <Property Name="food_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="image_link" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="qty" Type="Int32" Nullable="false" />
           <Property Name="created_at" Type="DateTime" Precision="3" />
           <Property Name="updated_at" Type="DateTime" Precision="3" />
         </EntityType>
@@ -137,6 +139,8 @@
                 <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="created_at" ColumnName="created_at" />
                 <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+                <ScalarProperty Name="qty" ColumnName="qty" />
+                <ScalarProperty Name="preserve_date" ColumnName="preserve_date" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -147,7 +151,6 @@
                 <ScalarProperty Name="resturent_user_id" ColumnName="resturent_user_id" />
                 <ScalarProperty Name="food_name" ColumnName="food_name" />
                 <ScalarProperty Name="image_link" ColumnName="image_link" />
-                <ScalarProperty Name="qty" ColumnName="qty" />
                 <ScalarProperty Name="created_at" ColumnName="created_at" />
                 <ScalarProperty Name="updated_at" ColumnName="updated_at" />
               </MappingFragment>

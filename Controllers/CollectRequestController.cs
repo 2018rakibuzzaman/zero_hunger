@@ -5,21 +5,27 @@ using System.Web;
 using System.Web.Mvc;
 using zero_hunger.Models.DB;
 using zero_hunger.Models.Repository;
+using zero_hunger.Models.Annotation;
 
 namespace zero_hunger.Controllers
 {
+    [Logdin]
     public class CollectRequestController : Controller
     {
+        private Iuser iuser;
         private Icollect_request icollect_request;
         public CollectRequestController()
         {
             this.icollect_request = new RepositoryCollect_requestClass(new zero_hungerEntities());
+            this.iuser = new RepositoryUserClass(new zero_hungerEntities());
         }
 
         // GET: CollectRequest
         public ActionResult Index()
         {
+            var all_emp = iuser.GetUsers().ToList(); 
             var collect_requestlist = icollect_request.GetCollect_request();
+            ViewBag.all_user = all_emp;
             return View(collect_requestlist);
         }
 
@@ -43,7 +49,9 @@ namespace zero_hunger.Controllers
         {
             try
             {
-                // TODO: Add insert logic here                
+                // TODO: Add insert logic here
+                collect_Request.created_at = DateTime.Now;
+                collect_Request.updated_at = DateTime.Now;
                 icollect_request.InsertCollect_requestRecord(collect_Request);
                 return RedirectToAction("Index");
             }
@@ -68,6 +76,7 @@ namespace zero_hunger.Controllers
             try
             {
                 // TODO: Add update logic here
+                collect_Request.updated_at = DateTime.Now;
                 icollect_request.UpdateCollect_requestRecord(collect_Request);
                 return RedirectToAction("Index");
             }

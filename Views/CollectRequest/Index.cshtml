@@ -1,51 +1,151 @@
 ﻿@model IEnumerable<zero_hunger.Models.DB.collect_request>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.food_id)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.employee_id)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.status)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.created_at)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.updated_at)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.food_id)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.employee_id)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.status)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.created_at)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.updated_at)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.id })
-        </td>
-    </tr>
+@{
+    ViewBag.Title = "All Request";
 }
 
-</table>
+<h3>
+    @Html.ActionLink("Create New", "../Food")
+</h3>
+@{
+    var per = new string[] { "0" };
+    if (Session["permission"] != null)
+    {
+        per = Session["permission"].ToString().Split(',');
+    }
+}
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.food_id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.employee_id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.status)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.created_at)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.updated_at)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.qty)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.preserve_date)
+                </th>
+
+                @if (Array.Exists(per, e => e == "1") || Array.Exists(per, e => e == "2"))
+                {
+                    <th>
+                        Assign Emp
+                    </th>
+                }
+                else if (Array.Exists(per, e => e == "8"))
+                {
+                    <th>
+                        Change status
+                    </th>
+                }
+                else
+                {
+                    <th></th>
+                }
+                <th>Action</th>
+
+
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.food_id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.employee_id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.status)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.created_at)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.updated_at)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.qty)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.preserve_date)
+                    </td>
+
+                    <td>
+                        <form method="post" action="collectrequest/Edit/@item.id" id="edit_request_@item.id">
+                            @Html.AntiForgeryToken()
+
+
+
+                            <input type="hidden" readonly name="food_id" value="@item.food_id" />
+                            <input type="hidden" readonly name="qty" value="@item.qty" />
+                            <input type="hidden" readonly name="preserve_date" value="@item.preserve_date" />
+                            <input type="hidden" readonly name="created_at" value="@item.created_at" />
+
+
+                            @if ( Array.Exists(per, e => e == "1") && Array.Exists(per, e => e == "1") )
+                            {
+                                <input type="hidden" readonly name="status" value="Approved" />
+
+                                <div class="form-group">
+                                    <select required name="employee_id" class="form-control" onchange="document.getElementById('edit_request_@item.id').submit();">
+                                        <option disabled selected>-Select-</option>
+                                        @foreach (zero_hunger.Models.DB.user users in ViewBag.all_user)
+                                        {
+                                            <option value="@users.id" @(item.employee_id == users.id ? "selected" : "")>@users.name</option>
+                                        }
+                                    </select>
+                                </div>
+                            }
+                            else if (Array.Exists(per, e => e == "8"))
+                            {
+                                <div class="form-group" hidden>
+                                    @Html.LabelFor(modelItem => item.employee_id, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        <input type="text" name="employee_id" value="@item.employee_id" class="form-control" />
+                                        @Html.ValidationMessageFor(modelItem => item.employee_id, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <select name="status" class="form-control" onchange="document.getElementById('edit_request_@item.id').submit();">
+                                        <option disabled selected>-Select-</option>
+                                        <option value="collected" @(item.status == "collected" ? "selected" : "")>collected</option>
+                                        <option value="cancel" @(item.status == "cancel" ? "selected" : "")>cancel</option>
+                                    </select>
+                                </div>
+                            }
+
+
+                        </form>
+                            </td>
+
+                    <td>
+                        @if (Array.Exists(per, e => e == "1") || Array.Exists(per, e => e == "2") || Array.Exists(per, e => e == "5") || Array.Exists(per, e => e == "6"))
+                        {
+                            @Html.ActionLink("Edit", "Edit", new { id = item.id });
+                        }
+
+                        @Html.ActionLink("Details", "Details", new { id = item.id })
+
+                        @if (Array.Exists(per, e => e == "1") || Array.Exists(per, e => e == "2") || Array.Exists(per, e => e == "5") || Array.Exists(per, e => e == "6"))
+                        {
+                            @Html.ActionLink("Delete", "Delete", new { id = item.id });
+                        }
+                        </td>
+                    </tr>
+            }
+
+        </table>

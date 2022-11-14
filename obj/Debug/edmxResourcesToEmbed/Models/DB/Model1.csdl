@@ -10,6 +10,8 @@
     <Property Name="status" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="created_at" Type="DateTime" Precision="3" />
     <Property Name="updated_at" Type="DateTime" Precision="3" />
+    <Property Name="qty" Type="Int32" />
+    <Property Name="preserve_date" Type="DateTime" Precision="3" />
   </EntityType>
   <EntityType Name="food">
     <Key>

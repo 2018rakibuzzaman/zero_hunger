@@ -15,8 +15,6 @@ namespace zero_hunger.Models.DB
     
     public partial class zero_hungerEntities : DbContext
     {
-        internal static object user;
-
         public zero_hungerEntities()
             : base("name=zero_hungerEntities")
         {

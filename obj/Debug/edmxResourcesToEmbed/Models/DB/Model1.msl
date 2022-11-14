@@ -10,6 +10,8 @@
           <ScalarProperty Name="status" ColumnName="status" />
           <ScalarProperty Name="created_at" ColumnName="created_at" />
           <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+          <ScalarProperty Name="qty" ColumnName="qty" />
+          <ScalarProperty Name="preserve_date" ColumnName="preserve_date" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

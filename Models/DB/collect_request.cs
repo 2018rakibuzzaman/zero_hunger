@@ -20,5 +20,7 @@ namespace zero_hunger.Models.DB
         public string status { get; set; }
         public Nullable<System.DateTime> created_at { get; set; }
         public Nullable<System.DateTime> updated_at { get; set; }
+        public Nullable<int> qty { get; set; }
+        public Nullable<System.DateTime> preserve_date { get; set; }
     }
 }

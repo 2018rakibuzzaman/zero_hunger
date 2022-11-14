@@ -6,15 +6,18 @@ using System.Web.Mvc;
 using zero_hunger.Models;
 using zero_hunger.Models.DB;
 using zero_hunger.Models.Repository;
+using static System.Collections.Specialized.BitVector32;
 
 namespace zero_hunger.Controllers
 {
     public class LoginController : Controller
     {
         private Iuser iuser;
+        private Irole irole;
         public LoginController()
         {
             this.iuser = new RepositoryUserClass(new zero_hungerEntities());
+            this.irole = new RepositoryRoleClass(new zero_hungerEntities());
         }
         // GET: Login
         [HttpGet]
@@ -38,6 +41,9 @@ namespace zero_hunger.Controllers
             {
                 user user = new user();
                 user = iuser.GetUserByEmail(data.Email);
+
+               
+
                 if(user == null)
                 {
                     if (data.Email != null)
@@ -50,7 +56,10 @@ namespace zero_hunger.Controllers
                 {
                     if (data.Password == user.password)
                     {
+                        role role = new role();
+                        role = irole.GetRoleByName(user.role);
                         Session["User"] = user;
+                        Session["permission"] = role.permission.ToString();
                         return Redirect("/Dashboard");
                     }
                     else
@@ -66,7 +75,13 @@ namespace zero_hunger.Controllers
             catch
             {
                 return View();
-            }            
+            }
+        }
+
+        public ActionResult logout()
+        {
+            Session.Clear();
+            return Redirect("/login");
         }
     }
 }

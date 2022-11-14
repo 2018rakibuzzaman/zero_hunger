@@ -14,5 +14,6 @@ namespace zero_hunger.Models.Repository
         void UpdateRoleRecord(role role);
         void DeleteRoleRecord(int roleid);
         role GetRoleById(int roleid);
+        role GetRoleByName(string name);
     }
 }

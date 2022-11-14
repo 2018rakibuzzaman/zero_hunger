@@ -4,29 +4,66 @@
 }
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
 <!-- Sidebar -->
 <div class="w3-sidebar w3-light-grey w3-bar-block" style="width:20%; padding:10px;">
     <h3 class="w3-bar-item">Menu</h3>
-    @if (Session["User"]!=null && (Session["User"] as user).role=="Admin")
-    {
-        <label>Admin, Employee & Resturent</label>
-        <a href="~/user" class="w3-bar-item w3-button" style="text-decoration:none;">All User</a>
-        <a href="~/user/create" class="w3-bar-item w3-button" style="text-decoration:none; ">Add User</a>
-    }
+    @{
+        var per = new string[] { "0" };
+        if (Session["permission"] != null)
+        {
+            per = Session["permission"].ToString().Split(',');
+        }
 
-    <label>Role</label>
-        <a href="~/role" class="w3-bar-item w3-button" style="text-decoration:none;">All Role</a>
-        <a href="~/role/Create" class="w3-bar-item w3-button" style="text-decoration:none;">Add Role</a>
-    <label>Food</label>
-    <a href="~/food" class="w3-bar-item w3-button" style="text-decoration:none;">All Food</a>
-    <a href="~/food/Create" class="w3-bar-item w3-button" style="text-decoration:none;">Add Food</a>
-    <label>Collect Request</label>
-    <a href="~/collectrequest" class="w3-bar-item w3-button" style="text-decoration:none;">All Request</a>
-    <a href="~/collectrequest/Create" class="w3-bar-item w3-button" style="text-decoration:none;">Add Request</a>
+
+        if (Array.Exists(per, e => e == "1") || Array.Exists(per, e => e == "2"))
+        {
+            <label>Admin, Employee & Resturent</label>
+            if (Array.Exists(per, e => e == "1"))
+            {
+                <a href="~/user" class="w3-bar-item w3-button" style="text-decoration:none;">All User</a>
+            }
+            if (Array.Exists(per, e => e == "2"))
+            {
+                <a href="~/user/create" class="w3-bar-item w3-button" style="text-decoration:none; ">Add User</a>
+            }
+        }
+
+        if (Array.Exists(per, e => e == "3") || Array.Exists(per, e => e == "4") )
+        {
+            <label>Role</label>
+            if (Array.Exists(per, e => e == "3"))
+            {
+                <a href="~/role" class="w3-bar-item w3-button" style="text-decoration:none;">All Role</a>
+            }
+            if (Array.Exists(per, e => e == "4"))
+            {
+                <a href="~/role/Create" class="w3-bar-item w3-button" style="text-decoration:none;">Add Role</a>
+            }
+        }
+
+        if (Array.Exists(per, e => e == "5") || Array.Exists(per, e => e == "6"))
+        {
+            <label>Food</label>
+            if (Array.Exists(per, e => e == "5"))
+            {
+                <a href="~/food" class="w3-bar-item w3-button" style="text-decoration:none;">All Food</a>
+            }
+            if (Array.Exists(per, e => e == "6"))
+            {
+                <a href="~/food/Create" class="w3-bar-item w3-button" style="text-decoration:none;">Add Food</a>
+            }
+        }
+
+        if (Array.Exists(per, e => e == "7"))
+        {
+            <label>Collect Request</label>
+            <a href="~/collectrequest" class="w3-bar-item w3-button" style="text-decoration:none;">All Request</a>
+        }
+    }
 </div>
 
 <!-- Page Content -->
-<div style="margin-left:25%">
-
+<div style="margin-left:50%">
 
 </div>

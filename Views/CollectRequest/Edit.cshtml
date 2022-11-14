@@ -1,6 +1,5 @@
 ﻿@model zero_hunger.Models.DB.collect_request
 
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -11,7 +10,7 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.id)
 
-        <div class="form-group">
+        <div class="form-group" hidden>
             @Html.LabelFor(model => model.food_id, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.food_id, new { htmlAttributes = new { @class = "form-control" } })
@@ -19,7 +18,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" hidden>
             @Html.LabelFor(model => model.employee_id, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.employee_id, new { htmlAttributes = new { @class = "form-control" } })
@@ -27,7 +26,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" hidden>
             @Html.LabelFor(model => model.status, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.status, new { htmlAttributes = new { @class = "form-control" } })
@@ -35,19 +34,20 @@
             </div>
         </div>
 
+
         <div class="form-group">
-            @Html.LabelFor(model => model.created_at, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.qty, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.created_at, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.created_at, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.qty, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.qty, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.updated_at, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.preserve_date, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.updated_at, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.updated_at, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.preserve_date, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.preserve_date, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -62,7 +62,3 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

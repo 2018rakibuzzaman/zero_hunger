@@ -10,6 +10,8 @@
     <Property Name="status" Type="varchar" MaxLength="255" Nullable="false" />
     <Property Name="created_at" Type="datetime" />
     <Property Name="updated_at" Type="datetime" />
+    <Property Name="qty" Type="int" />
+    <Property Name="preserve_date" Type="datetime" />
   </EntityType>
   <EntityType Name="food">
     <Key>

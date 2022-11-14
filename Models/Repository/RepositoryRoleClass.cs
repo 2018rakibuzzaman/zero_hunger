@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Helpers;
+using System.Web.Security;
 using zero_hunger.Models.DB;
 
 namespace zero_hunger.Models.Repository
@@ -30,6 +32,11 @@ namespace zero_hunger.Models.Repository
         public role GetRoleById(int roleid)
         {
             return zero_hungerEntities.roles.Find(roleid);
+        }
+
+        public role GetRoleByName(string name)
+        {
+            return zero_hungerEntities.roles.FirstOrDefault(m => m.role_name == name);
         }
 
         public void InsertRoleRecord(role role)

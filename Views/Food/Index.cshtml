@@ -1,11 +1,69 @@
 ﻿@model IEnumerable<zero_hunger.Models.DB.food>
-@{ 
+
+@{
     ViewBag.Title = "All Foods";
 }
 
-<p>
+<style>
+/* Add padding and center-align text to the container */
+.container {
+  padding: 16px;
+  text-align: center;
+}
+
+/* The Modal (background) */
+.modal {
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0,0);
+  padding-top: 50px;
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* Style the horizontal ruler */
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+/* The Modal Close Button (x) */
+.close {
+  position: absolute;
+  right: 35px;
+  top: 15px;
+  font-size: 40px;
+  font-weight: bold;
+  color: #f1f1f1;
+}
+
+.close:hover,
+.close:focus {
+  color: #f44336;
+  cursor: pointer;
+}
+
+/* Clear floats */
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+</style>
+<h3>
     @Html.ActionLink("Create New", "Create")
-</p>
+</h3>
 <table class="table">
     <tr>
         <th>
@@ -13,9 +71,6 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.image_link)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.qty)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.created_at)
@@ -31,53 +86,69 @@
         </th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.food_name)
-        </td>
-        <td>
-            <img src="@(item.image_link)" height="50px" />
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.qty)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.created_at)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.updated_at)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.id })
-        </td>
-        <td>
-            <input type="button" class="btn btn-info" onclick="add_to_cart(@item.id)" value="Add to cart" />
-        </td>
-    </tr>
-}
-
-</table>
-
-<script>
-    function add_to_cart(f_id)
+    @foreach (var item in Model)
     {
-        
-
-        $.ajax({
-            url: "/Cart/Create",
-            type: "POST",
-            contentType: "application/json; charset=utf-8",
-            data: { food_id: f_id },
-            dataType: "json",
-            success: function (response) {
-                alert(response);
-            },
-            error: function (response) {
-                alert(response);
-            }
-        });
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.food_name)
+            </td>
+            <td>
+                <img src="@(item.image_link)" height="50px" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.created_at)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.updated_at)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.id })
+            </td>
+            <td>
+                <input type="button" class="btn btn-info" onclick="add_to_cart(@item.id)" value="Create Request" />
+            </td>
+        </tr>
     }
-</script>
+    </table>
+    
+    <div id="id01" class="modal" style="display:none;">
+        <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">×</span>
+        <form class="modal-content" action="/collectrequest/Create" method="post">
+            @Html.AntiForgeryToken()
+            <div class="container">
+
+                <input type="hidden" readonly name="food_id" id="food_id" />
+                <input type="hidden" readonly name="status" value="pending" />
+                <center>
+                    <label>Quantity</label>
+                    <input type="number" class="form-control" name="qty" required />
+                    <label>Preserve Date</label>
+                    <input type="date" class="form-control" name="preserve_date" required />
+                </center>
+                <br />
+                <br />
+
+                <div class="clearfix">
+                    <button type="button" onclick="document.getElementById('id01').style.display='none'" class="btn btn-info">Cancel</button>
+                    <button type="submit" class="btn btn-success">Confirm</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+    <script>
+        function add_to_cart(f_id) {
+            var modal = document.getElementById('id01');
+            if (modal.style.display == "none") {
+                modal.style.display = "block";
+                document.getElementById('food_id').value = f_id;
+            }
+            else {
+                modal.style.display = "none";
+                document.getElementById(food_id).value = "";
+            }
+        }
+    </script>

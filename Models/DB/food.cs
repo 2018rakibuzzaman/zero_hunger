@@ -18,7 +18,6 @@ namespace zero_hunger.Models.DB
         public int resturent_user_id { get; set; }
         public string food_name { get; set; }
         public string image_link { get; set; }
-        public int qty { get; set; }
         public Nullable<System.DateTime> created_at { get; set; }
         public Nullable<System.DateTime> updated_at { get; set; }
     }
